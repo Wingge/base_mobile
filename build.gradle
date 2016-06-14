@@ -1,0 +1,170 @@
+apply plugin: 'com.android.application'
+
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        version "${version_code}"
+        versionName "${version_name}"
+        minSdkVersion "${minSdkVersion}"
+        targetSdkVersion "${targetSdkVersion}"
+        //启用JAVA8支持
+        jackOptions {
+            enabled true
+        }
+    }
+    signingConfigs {
+        debug {
+            // No debug config
+        }
+        release {
+            storeFile file(releasekey_storefile)
+            storePassword releasekey_storePassword
+            keyAlias releasekey_keyAlias
+            keyPassword releasekey_keyPassword
+        }
+    }
+
+    //注意与其它平台统一，如wear
+    buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+            debuggable true
+            minifyEnabled false
+            //微应用，如wear应用
+            embedMicroApp = true
+            signingConfig signingConfigs.debug
+            //定义http请求的根url.
+            buildConfigField("String", "SERVER_ENDPOINT", "\"${debug_website_host_name}\"")
+            buildConfigField("String", "GCM_API_KEY", "\"${gcm_api_key}\"")
+            buildConfigField("String", "GCM_SENDER_ID", "\"${gcm_sender_id}\"")
+        }
+        qualityassurance {
+            applicationIdSuffix '.qualityassurance'
+            debuggable true
+            minifyEnabled true
+            embedMicroApp = true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "SERVER_ENDPOINT", "\"${test_website_host_name}\"")
+            buildConfigField("String", "GCM_API_KEY", "\"${gcm_api_key}\"")
+            buildConfigField("String", "GCM_SENDER_ID", "\"${gcm_sender_id}\"")
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            embedMicroApp = true
+            signingConfig signingConfigs.release
+            buildConfigField("String", "SERVER_ENDPOINT", "\"${production_website_host_name}\"")
+            buildConfigField("String", "GCM_API_KEY", "\"${gcm_api_key}\"")
+            buildConfigField("String", "GCM_SENDER_ID", "\"${gcm_sender_id}\"")
+
+            //自己写
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //using android-proguard-snippets demo 定制
+//            proguardFile 'proguard-acra.pro'
+//            proguardFile 'proguard-action-bar-sherlock.pro'
+//            proguardFile 'proguard-aws.pro'
+//            proguardFile 'proguard-google-play-services.pro'
+//            proguardFile 'proguard-gson.pro'
+//            proguardFile 'proguard-project-app.pro'
+//            proguardFile getDefaultProguardFile('proguard-android.txt')
+            //所有
+//            consumerProguardFiles 'proguard-file.pro'
+        }
+
+    }
+
+    //注意与其它平台统一，如wear
+    productFlavors {
+
+        //不动分支,如果需要在不同分支有不同的代码，请在main同目录下创建flavor_name/java/
+        china {
+            //不同app_id可实现在同一手机安装不同版本应用
+//            applicationId "android.code.wing.baseapp.china"
+//            versionName "1.0-china"
+        }
+        googleplay {
+//            applicationId "android.code.wing.baseapp.googleplay"
+//            versionName "1.0-googleplay"
+        }
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+
+    compileOptions {
+        //如果javaVersion>＝1.8，需启用JAVA8支持(看上面的defaultConfig)
+        sourceCompatibility rootProject.ext.javaVersion
+        targetCompatibility rootProject.ext.javaVersion
+    }
+
+//    lintOptions {
+//        abortOnError rootProject.ext.abortOnLintError
+//        checkReleaseBuilds rootProject.ext.checkLintRelease
+//        quiet true
+//        ignoreWarnings true
+//        // Some libraries have issues with this.
+//        disable 'InvalidPackage'
+//        // Lint gives this warning but SDK 20 would be Android L Beta.
+//        disable 'OldTargetApi'
+//    }
+
+    applicationVariants.all { variant ->
+//            variant.outputs.each { output ->
+//                def outputFile = output.outputFile
+//                def fileName
+//                if (outputFile != null && outputFile.name.endsWith('.apk') && 'release'.equals(variant.buildType.name)) {
+//                    // 输出apk名称为bwm_v1.0_2015-01-15_wandoujia.apk
+//                    fileName = "bwm_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+//                } else {
+//                    fileName = "bwm-${outputFile.name}"
+//                }
+//                output.outputFile = new File(outputFile.parent, fileName)
+//            }
+    }
+    // Remove mockRelease as it's not needed.
+    android.variantFilter { variant ->
+        if(variant.buildType.name.equals('release')
+                && variant.getFlavors().get(0).name.equals('mock')) {
+            variant.setIgnore(true);
+        }
+    }
+}
+//(为了动态flavor里实现applicationId)和每一个Flavor一一对应,同时在depandencies中引用定义的分支名进行打包
+configurations {
+    chinaDebugWearApp
+    chinaQualityassuranceWearApp
+    chinaReleaseWearApp
+    googleplayDebugWearApp
+    googleplayQualityassuranceWearApp
+    googleplayReleaseWearApp
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //默认，只有一个applicatinid时
+    wearApp project(':base_wear')
+    //    // china productFlavors分支下引用依赖。
+    //    chinaDebugWearApp project(path: ':wear', configuration: 'chinaDebug')
+    //    chinaQualityassuranceWearApp project(path: ':wear', configuration: 'chinaQualityassurance')
+    //    chinaReleaseWearApp project(path: ':wear', configuration: 'chinaRelease')
+    //    googleplayDebugWearApp project(path: ':wear', configuration: 'googleplayDebug')
+    //    googleplayQualityassuranceWearApp project(path: ':wear', configuration: 'googleplayQualityassurance')
+    //    googleplayReleaseWearApp project(path: ':wear', configuration: 'googleplayRelease')
+//        compile "com.google.android.gms:play-services:$GooglePlayServicesClientLibraryVersion"
+    compile project(':app_core')
+
+    compile 'com.jakewharton:butterknife:7.0.1'
+
+
+}
