@@ -1,8 +1,5 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
-def releaseTime() {
-    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
-}
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -12,10 +9,11 @@ android {
         versionName "${version_name}"
         minSdkVersion "${minSdkVersion}"
         targetSdkVersion "${targetSdkVersion}"
-        //启用JAVA8支持
-        jackOptions {
-            enabled true
-        }
+        // TODO for test,当本module作为library时，以下不可用，需注释
+//        //启用JAVA8支持
+//        jackOptions {
+//            enabled true
+//        }
     }
     signingConfigs {
         debug {
@@ -28,56 +26,56 @@ android {
             keyPassword releasekey_keyPassword
         }
     }
-
-    //注意与其它平台统一，如wear
-    buildTypes {
-        debug {
-            applicationIdSuffix '.debug'
-            debuggable true
-            minifyEnabled false
-            //微应用，如wear应用
-            embedMicroApp = true
-            signingConfig signingConfigs.debug
-            //定义http请求的根url.
-            buildConfigField("String", "SERVER_ENDPOINT", "\"${debug_website_host_name}\"")
-            buildConfigField("String", "GCM_API_KEY", "\"${gcm_api_key}\"")
-            buildConfigField("String", "GCM_SENDER_ID", "\"${gcm_sender_id}\"")
-        }
-        qualityassurance {
-            applicationIdSuffix '.qualityassurance'
-            debuggable true
-            minifyEnabled true
-            embedMicroApp = true
-            signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField("String", "SERVER_ENDPOINT", "\"${test_website_host_name}\"")
-            buildConfigField("String", "GCM_API_KEY", "\"${gcm_api_key}\"")
-            buildConfigField("String", "GCM_SENDER_ID", "\"${gcm_sender_id}\"")
-        }
-        release {
-            debuggable false
-            minifyEnabled true
-            embedMicroApp = true
-            signingConfig signingConfigs.release
-            buildConfigField("String", "SERVER_ENDPOINT", "\"${production_website_host_name}\"")
-            buildConfigField("String", "GCM_API_KEY", "\"${gcm_api_key}\"")
-            buildConfigField("String", "GCM_SENDER_ID", "\"${gcm_sender_id}\"")
-
-            //自己写
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            //using android-proguard-snippets demo 定制
-//            proguardFile 'proguard-acra.pro'
-//            proguardFile 'proguard-action-bar-sherlock.pro'
-//            proguardFile 'proguard-aws.pro'
-//            proguardFile 'proguard-google-play-services.pro'
-//            proguardFile 'proguard-gson.pro'
-//            proguardFile 'proguard-project-app.pro'
-//            proguardFile getDefaultProguardFile('proguard-android.txt')
-            //所有
-//            consumerProguardFiles 'proguard-file.pro'
-        }
-
-    }
+// TODO for test,当本module作为library时，以下不可用，需注释
+//    //注意与其它平台统一，如wear
+//    buildTypes {
+//        debug {
+//            applicationIdSuffix '.debug'
+//            debuggable true
+//            minifyEnabled false
+//            //微应用，如wear应用
+//            embedMicroApp = true
+//            signingConfig signingConfigs.debug
+//            //定义http请求的根url.
+//            buildConfigField("String", "SERVER_ENDPOINT", "\"${debug_website_host_name}\"")
+//            buildConfigField("String", "GCM_API_KEY", "\"${gcm_api_key}\"")
+//            buildConfigField("String", "GCM_SENDER_ID", "\"${gcm_sender_id}\"")
+//        }
+//        qualityassurance {
+//            applicationIdSuffix '.qualityassurance'
+//            debuggable true
+//            minifyEnabled true
+//            embedMicroApp = true
+//            signingConfig signingConfigs.release
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            buildConfigField("String", "SERVER_ENDPOINT", "\"${test_website_host_name}\"")
+//            buildConfigField("String", "GCM_API_KEY", "\"${gcm_api_key}\"")
+//            buildConfigField("String", "GCM_SENDER_ID", "\"${gcm_sender_id}\"")
+//        }
+//        release {
+//            debuggable false
+//            minifyEnabled true
+//            embedMicroApp = true
+//            signingConfig signingConfigs.release
+//            buildConfigField("String", "SERVER_ENDPOINT", "\"${production_website_host_name}\"")
+//            buildConfigField("String", "GCM_API_KEY", "\"${gcm_api_key}\"")
+//            buildConfigField("String", "GCM_SENDER_ID", "\"${gcm_sender_id}\"")
+//
+//            //自己写
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            //using android-proguard-snippets demo 定制
+////            proguardFile 'proguard-acra.pro'
+////            proguardFile 'proguard-action-bar-sherlock.pro'
+////            proguardFile 'proguard-aws.pro'
+////            proguardFile 'proguard-google-play-services.pro'
+////            proguardFile 'proguard-gson.pro'
+////            proguardFile 'proguard-project-app.pro'
+////            proguardFile getDefaultProguardFile('proguard-android.txt')
+//            //所有
+////            consumerProguardFiles 'proguard-file.pro'
+//        }
+//
+//    }
 
     //注意与其它平台统一，如wear
     productFlavors {
@@ -119,22 +117,9 @@ android {
 //        disable 'OldTargetApi'
 //    }
 
-    applicationVariants.all { variant ->
-//            variant.outputs.each { output ->
-//                def outputFile = output.outputFile
-//                def fileName
-//                if (outputFile != null && outputFile.name.endsWith('.apk') && 'release'.equals(variant.buildType.name)) {
-//                    // 输出apk名称为bwm_v1.0_2015-01-15_wandoujia.apk
-//                    fileName = "bwm_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
-//                } else {
-//                    fileName = "bwm-${outputFile.name}"
-//                }
-//                output.outputFile = new File(outputFile.parent, fileName)
-//            }
-    }
     // Remove mockRelease as it's not needed.
     android.variantFilter { variant ->
-        if(variant.buildType.name.equals('release')
+        if (variant.buildType.name.equals('release')
                 && variant.getFlavors().get(0).name.equals('mock')) {
             variant.setIgnore(true);
         }
@@ -152,19 +137,26 @@ configurations {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    //默认，只有一个applicatinid时
-    wearApp project(':base_wear')
-    //    // china productFlavors分支下引用依赖。
-    //    chinaDebugWearApp project(path: ':wear', configuration: 'chinaDebug')
-    //    chinaQualityassuranceWearApp project(path: ':wear', configuration: 'chinaQualityassurance')
-    //    chinaReleaseWearApp project(path: ':wear', configuration: 'chinaRelease')
-    //    googleplayDebugWearApp project(path: ':wear', configuration: 'googleplayDebug')
-    //    googleplayQualityassuranceWearApp project(path: ':wear', configuration: 'googleplayQualityassurance')
-    //    googleplayReleaseWearApp project(path: ':wear', configuration: 'googleplayRelease')
-//        compile "com.google.android.gms:play-services:$GooglePlayServicesClientLibraryVersion"
+
+    // TODO for test,当本module作为library时，不可用或不必重复引用，应注释
     compile project(':app_core')
+    //默认，只有一个applicatinid时
+//    wearApp project(':base_wear')
+//    //    // china productFlavors分支下引用依赖。
+//    //    chinaDebugWearApp project(path: ':wear', configuration: 'chinaDebug')
+//    //    chinaQualityassuranceWearApp project(path: ':wear', configuration: 'chinaQualityassurance')
+//    //    chinaReleaseWearApp project(path: ':wear', configuration: 'chinaRelease')
+//    //    googleplayDebugWearApp project(path: ':wear', configuration: 'googleplayDebug')
+//    //    googleplayQualityassuranceWearApp project(path: ':wear', configuration: 'googleplayQualityassurance')
+//    //    googleplayReleaseWearApp project(path: ':wear', configuration: 'googleplayRelease')
+////        compile "com.google.android.gms:play-services:$GooglePlayServicesClientLibraryVersion"
 
-    compile 'com.jakewharton:butterknife:7.0.1'
-
+//    //内存泄漏检查，请二选一
+    testCompile rootProject.ext.debugDependencies.leakCanary
+    debugCompile rootProject.ext.debugDependencies.leakCanary
+    releaseCompile rootProject.ext.releaseDependencies.leakCanary
+////    testCompile rootProject.ext.debugDependencies.blockCanary
+////    debugCompile rootProject.ext.debugDependencies.blockCanary
+////    releaseCompile rootProject.ext.releaseDependencies.blockCanary
 
 }

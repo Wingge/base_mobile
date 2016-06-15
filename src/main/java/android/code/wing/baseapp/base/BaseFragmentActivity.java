@@ -1,11 +1,8 @@
 package android.code.wing.baseapp.base;
 
-import android.code.wing.baseapp.R;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -29,16 +26,16 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
      */
     protected void initToolBar() {
         // Always cast your custom Toolbar here, and set it as the ActionBar.
-        Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(tb);
-
-        // Get the ActionBar here to configure the way it behaves.
-        final ActionBar ab = getSupportActionBar();
-        //ab.setHomeAsUpIndicator(R.drawable.ic_menu); // set a custom icon for the default home button
-        ab.setDisplayShowHomeEnabled(true); // show or hide the default home button
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
-        ab.setDisplayShowTitleEnabled(false); // disable the default title element here (for centered title)
+//        Toolbar tb = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(tb);
+//
+//        // Get the ActionBar here to configure the way it behaves.
+//        final ActionBar ab = getSupportActionBar();
+//        //ab.setHomeAsUpIndicator(R.drawable.ic_menu); // set a custom icon for the default home button
+//        ab.setDisplayShowHomeEnabled(true); // show or hide the default home button
+//        ab.setDisplayHomeAsUpEnabled(true);
+//        ab.setDisplayShowCustomEnabled(true); // enable overriding the default toolbar layout
+//        ab.setDisplayShowTitleEnabled(false); // disable the default title element here (for centered title)
     }
 
     private void hideStatusBar() {
