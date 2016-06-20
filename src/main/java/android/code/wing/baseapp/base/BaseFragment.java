@@ -39,6 +39,8 @@ public abstract class BaseFragment<T extends BaseFragmentActivity> extends Fragm
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(getLayoutId(), container, false);
 //        ButterKnife.bind(this, rootView);
+        /**默认副标题为空*/
+        setSubTitle(null);
         initViews(rootView, savedInstanceState);
         return rootView;
     }
@@ -119,5 +121,11 @@ public abstract class BaseFragment<T extends BaseFragmentActivity> extends Fragm
         outState.putBoolean(STATE_SAVE_IS_HIDDEN, isHidden());
     }
 
-
+    /**
+     * 设置副标题，默认为空，可重写，之所以写这个方法是因为在多个fragment中，一旦有一个fragment设置了副标题，其它的fragment也会同时出现一样的副标题
+     * @param title
+     */
+    public void setSubTitle(CharSequence title){
+        getHoldingActivity().getSupportActionBar().setSubtitle(title);
+    }
 }

@@ -43,6 +43,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
             if (showNavigationIcon()) {
 //            toolbar.setNavigationIcon(R.mipmap.toolbar_back);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//                toolbar.setSubtitle("副标题");
                 toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -127,5 +128,6 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
 //        }
         onBackPressed();
     }
+
 
 }
