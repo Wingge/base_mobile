@@ -1,35 +1,42 @@
 package android.code.wing.baseapp.base;
 
-import android.code.wing.baseapp.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 /**
- * 使用fragement的activity基类，如不使用fragement请换{@link BaseActivity}
+ * 当一个activity不需要跳转，切换fragment时使用这个基类更方便，否则请用{@link BaseMultFragmentActivity}
+ * 如不使用fragement请换{@link BaseFragmentActivity}
  * 参考：http://blog.csdn.net/lmj623565791/article/details/42628537
  * Created by wing on 16/1/24.
  */
-public abstract class BaseSingleFragmentActivity extends BaseActivity
-{
-    protected abstract Fragment createFragment();
+public abstract class BaseSingleFragmentActivity extends BaseFragmentActivity {
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single_fragment);
+        setContentView(getContentViewId());
 
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment =fm.findFragmentById(R.id.id_fragment_container);
+        Fragment fragment = fm.findFragmentById(getFragmentContentId());
 
-        if(fragment == null )
-        {
-            fragment = createFragment() ;
+        if (fragment == null) {
+            fragment = initOrRestoreFragment(savedInstanceState);
 
-            fm.beginTransaction().add(R.id.id_fragment_container,fragment).commit();
+            fm.beginTransaction().add(getFragmentContentId(), fragment).commit();
         }
     }
 
+    /**
+     * SingleFragmentActivity , so...no need addFragment
+     *
+     * @param fragment
+     * @deprecated
+     */
+    @Override
+    protected void addFragment(Fragment fragment) {
+
+    }
 }

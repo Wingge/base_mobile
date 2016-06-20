@@ -5,27 +5,27 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        version "${version_code}"
-        versionName "${version_name}"
-        minSdkVersion "${minSdkVersion}"
-        targetSdkVersion "${targetSdkVersion}"
+        version rootProject.ext.version_code
+        versionName rootProject.ext.version_name
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         // TODO for test,当本module作为library时，以下不可用，需注释
 //        //启用JAVA8支持
 //        jackOptions {
 //            enabled true
 //        }
     }
-    signingConfigs {
-        debug {
-            // No debug config
-        }
-        release {
-            storeFile file(releasekey_storefile)
-            storePassword releasekey_storePassword
-            keyAlias releasekey_keyAlias
-            keyPassword releasekey_keyPassword
-        }
-    }
+//    signingConfigs {
+//        debug {
+//            // No debug config
+//        }
+//        release {
+//            storeFile file(releasekey_storefile)
+//            storePassword releasekey_storePassword
+//            keyAlias releasekey_keyAlias
+//            keyPassword releasekey_keyPassword
+//        }
+//    }
 // TODO for test,当本module作为library时，以下不可用，需注释
 //    //注意与其它平台统一，如wear
 //    buildTypes {
@@ -76,21 +76,21 @@ android {
 //        }
 //
 //    }
-
-    //注意与其它平台统一，如wear
-    productFlavors {
-
-        //不动分支,如果需要在不同分支有不同的代码，请在main同目录下创建flavor_name/java/
-        china {
-            //不同app_id可实现在同一手机安装不同版本应用
-//            applicationId "android.code.wing.baseapp.china"
-//            versionName "1.0-china"
-        }
-        googleplay {
-//            applicationId "android.code.wing.baseapp.googleplay"
-//            versionName "1.0-googleplay"
-        }
-    }
+//
+//    //注意与其它平台统一，如wear
+//    productFlavors {
+//
+//        //不动分支,如果需要在不同分支有不同的代码，请在main同目录下创建flavor_name/java/
+//        china {
+//            //不同app_id可实现在同一手机安装不同版本应用
+////            applicationId "android.code.wing.baseapp.china"
+////            versionName "1.0-china"
+//        }
+//        googleplay {
+////            applicationId "android.code.wing.baseapp.googleplay"
+////            versionName "1.0-googleplay"
+//        }
+//    }
 
     packagingOptions {
         exclude 'LICENSE.txt'
@@ -100,11 +100,11 @@ android {
         exclude 'META-INF/LICENSE'
     }
 
-    compileOptions {
-        //如果javaVersion>＝1.8，需启用JAVA8支持(看上面的defaultConfig)
-        sourceCompatibility rootProject.ext.javaVersion
-        targetCompatibility rootProject.ext.javaVersion
-    }
+//    compileOptions {
+//        //如果javaVersion>＝1.8，需启用JAVA8支持(看上面的defaultConfig)
+//        sourceCompatibility rootProject.ext.javaVersion
+//        targetCompatibility rootProject.ext.javaVersion
+//    }
 
 //    lintOptions {
 //        abortOnError rootProject.ext.abortOnLintError
@@ -117,13 +117,13 @@ android {
 //        disable 'OldTargetApi'
 //    }
 
-    // Remove mockRelease as it's not needed.
-    android.variantFilter { variant ->
-        if (variant.buildType.name.equals('release')
-                && variant.getFlavors().get(0).name.equals('mock')) {
-            variant.setIgnore(true);
-        }
-    }
+//    // Remove mockRelease as it's not needed.
+//    android.variantFilter { variant ->
+//        if (variant.buildType.name.equals('release')
+//                && variant.getFlavors().get(0).name.equals('mock')) {
+//            variant.setIgnore(true);
+//        }
+//    }
 }
 //(为了动态flavor里实现applicationId)和每一个Flavor一一对应,同时在depandencies中引用定义的分支名进行打包
 configurations {
@@ -138,8 +138,14 @@ configurations {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
-    // TODO for test,当本module作为library时，不可用或不必重复引用，应注释
     compile project(':app_core')
+    // Android support libraries.
+    compile rootProject.ext.libSupportAppcompat
+    compile rootProject.ext.libSupportDesign
+    compile rootProject.ext.libSupportRecyclerview
+    compile rootProject.ext.libSupportV4
+
+
     //默认，只有一个applicatinid时
 //    wearApp project(':base_wear')
 //    //    // china productFlavors分支下引用依赖。
@@ -158,5 +164,7 @@ dependencies {
 ////    testCompile rootProject.ext.debugDependencies.blockCanary
 ////    debugCompile rootProject.ext.debugDependencies.blockCanary
 ////    releaseCompile rootProject.ext.releaseDependencies.blockCanary
+
+//    compile 'com.jakewharton:butterknife:7.0.1'
 
 }

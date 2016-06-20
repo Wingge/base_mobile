@@ -1,13 +1,13 @@
 package android.code.wing.baseapp.base;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
 
 /**
- * 使用fragement的activity基类，如不使用fragement请换{@link BaseActivity}
+ * 当一个activity包含多个fragmtnt或需跳转到其它fragment时使用这个基类更方便，否则请用{@link BaseSingleFragmentActivity}
+ * 如不使用fragement请换{@link BaseFragmentActivity}
  * Created by wing on 16/1/24.
  */
-public abstract class BaseMultFragmentActivity extends BaseActivity {
+public abstract class BaseMultFragmentActivity extends BaseFragmentActivity {
 
     private static final String KEY_INDEX = "key_index";
 
@@ -16,39 +16,6 @@ public abstract class BaseMultFragmentActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
     }
 
-    //布局中Fragment的ID
-    protected abstract int getFragmentContentId();
-
-    //添加fragment
-    protected void addFragment(BaseFragment fragment) {
-        if (fragment != null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(getFragmentContentId(), fragment, fragment.getClass().getSimpleName())
-                    .addToBackStack(fragment.getClass().getSimpleName())
-                    .commitAllowingStateLoss();
-        }
-    }
-
-    //移除fragment
-    protected void removeFragment() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-            getSupportFragmentManager().popBackStack();
-        } else {
-            finish();
-        }
-    }
-
-    //返回键返回事件
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (KeyEvent.KEYCODE_BACK == keyCode) {
-            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-                finish();
-                return true;
-            }
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 
 /**===============================该部分用于避免重叠fragment的代码已停用，在BaseFragment使用了新的解决方案============================================*/
 //    protected abstract int getCurrentIndex();

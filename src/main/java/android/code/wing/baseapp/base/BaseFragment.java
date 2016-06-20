@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -13,9 +14,9 @@ import android.view.ViewGroup;
 
 //import butterknife.ButterKnife;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment<T extends BaseFragmentActivity> extends Fragment {
     protected final String TAG = getClass().getSimpleName();
-    protected BaseMultFragmentActivity mActivity;
+    protected BaseFragmentActivity mActivity;
     private static final String STATE_SAVE_IS_HIDDEN = "state_save_is_hidden";
 
     @Override
@@ -38,17 +39,22 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(getLayoutId(), container, false);
 //        ButterKnife.bind(this, rootView);
-        initView(rootView, savedInstanceState);
+        initViews(rootView, savedInstanceState);
         return rootView;
     }
 
-    protected abstract void initView(View view, Bundle savedInstanceState);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    protected abstract void initViews(View view, Bundle savedInstanceState);
 
     //获取fragment布局文件ID
     protected abstract int getLayoutId();
 
     //获取宿主Activity
-    protected BaseMultFragmentActivity getHoldingActivity() {
+    protected BaseFragmentActivity getHoldingActivity() {
         return mActivity;
     }
 
@@ -75,10 +81,15 @@ public abstract class BaseFragment extends Fragment {
         onAttachToContext(context);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     /*
-     * Deprecated on API 23
-     * Use onAttachToContext instead
-     */
+                 * Deprecated on API 23
+                 * Use onAttachToContext instead
+                 */
     @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
@@ -92,7 +103,7 @@ public abstract class BaseFragment extends Fragment {
      * Called when the fragment attaches to the context
      */
     protected void onAttachToContext(Context context) {
-        this.mActivity = context instanceof BaseMultFragmentActivity ? (BaseMultFragmentActivity) context : null;
+        this.mActivity = context instanceof BaseFragmentActivity ? (BaseFragmentActivity) context : null;
     }
 
     @Override
