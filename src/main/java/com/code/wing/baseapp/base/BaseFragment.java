@@ -1,4 +1,4 @@
-package android.code.wing.baseapp.base;
+package com.code.wing.baseapp.base;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -12,9 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.ButterKnife;
+
 //import butterknife.ButterKnife;
 
-public abstract class BaseFragment<T extends BaseFragmentActivity> extends Fragment {
+/**
+ * @date 2016/6/21 0021 10:55
+ * @author Wing.Zhong
+ * @Description TODO
+ * @version ccode
+ */
+public abstract class BaseFragment extends Fragment {
     protected final String TAG = getClass().getSimpleName();
     protected BaseFragmentActivity mActivity;
     private static final String STATE_SAVE_IS_HIDDEN = "state_save_is_hidden";
@@ -23,22 +31,33 @@ public abstract class BaseFragment<T extends BaseFragmentActivity> extends Fragm
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            boolean isSupportHidden = savedInstanceState.getBoolean(STATE_SAVE_IS_HIDDEN);
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            if (isSupportHidden) {
-                ft.hide(this);
-            } else {
-                ft.show(this);
-            }
-            ft.commit();
+            initStatusByHideOrShow(savedInstanceState);
         }
     }
 
+    /**
+     * @date 2016/6/21 0021 13:48
+     * @author Wing.Zhong
+     * @description 用于避免重叠fragment，参考了http://www.jianshu.com/p/c12a98a36b2b
+     * @version V0.0.1
+     * @param savedInstanceState 保存的数据
+     * @return void
+     */
+    private void initStatusByHideOrShow(Bundle savedInstanceState) {
+        boolean isSupportHidden = savedInstanceState.getBoolean(STATE_SAVE_IS_HIDDEN);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (isSupportHidden) {
+            ft.hide(this);
+        } else {
+            ft.show(this);
+        }
+        ft.commit();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(getLayoutId(), container, false);
-//        ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         /**默认副标题为空*/
         setSubTitle(null);
         initViews(rootView, savedInstanceState);

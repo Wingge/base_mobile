@@ -1,11 +1,14 @@
-package android.code.wing.baseapp.base;
+package com.code.wing.baseapp.base;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.ButterKnife;
 
 /**
  * RecyclerAdapter基类
@@ -108,4 +111,18 @@ public abstract class BaseRecyclerAdapter<VH extends RecyclerView.ViewHolder,T e
     public void addItems(List<T> data) {
         addItems(data, mDataList.size());
     }
+
+    /**
+     * @date 2016/6/21 0021 15:01
+     * @author Wing.Zhong
+     * @Description DefaultViewHolder,Using ButterKnife internal
+     * @version
+     */
+    public static class BaseViewHolder extends RecyclerView.ViewHolder{
+        public BaseViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
 }

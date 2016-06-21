@@ -1,4 +1,4 @@
-package android.code.wing.baseapp;
+package com.code.wing.baseapp;
 
 import org.junit.Test;
 

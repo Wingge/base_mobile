@@ -1,12 +1,11 @@
-package android.code.wing.baseapp.base;
+package com.code.wing.baseapp.base;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 /**
- * 当一个activity不需要跳转，切换fragment时使用这个基类更方便，否则请用{@link BaseMultFragmentActivity}
- * 如不使用fragement请换{@link BaseFragmentActivity}
+ * TODO
  * 参考：http://blog.csdn.net/lmj623565791/article/details/42628537
  * Created by wing on 16/1/24.
  */

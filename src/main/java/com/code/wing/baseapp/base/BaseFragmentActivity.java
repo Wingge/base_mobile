@@ -1,6 +1,5 @@
-package android.code.wing.baseapp.base;
+package com.code.wing.baseapp.base;
 
-import android.code.wing.baseapp.R;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,7 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.code.wing.baseapp.R;
+
+import butterknife.ButterKnife;
+
 public abstract class BaseFragmentActivity extends AppCompatActivity {
+
     protected final String TAG = getClass().getSimpleName();
     protected Toolbar toolbar;
     protected abstract void initViews(Bundle savedInstanceState);
@@ -21,6 +25,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
+        ButterKnife.bind(this);
         initToolbar();
         fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(getFragmentContentId());

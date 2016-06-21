@@ -1,10 +1,9 @@
-package android.code.wing.baseapp.base;
+package com.code.wing.baseapp.base;
 
 import android.os.Bundle;
 
 /**
- * 当一个activity包含多个fragmtnt或需跳转到其它fragment时使用这个基类更方便，否则请用{@link BaseSingleFragmentActivity}
- * 如不使用fragement请换{@link BaseFragmentActivity}
+ * TODO
  * Created by wing on 16/1/24.
  */
 public abstract class BaseMultFragmentActivity extends BaseFragmentActivity {

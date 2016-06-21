@@ -1,4 +1,4 @@
-package android.code.wing.baseapp.base;
+package com.code.wing.baseapp.base;
 
 import android.app.Activity;
 import android.content.Intent;

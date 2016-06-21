@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt' // 注释处理和dagger关联
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -165,6 +166,9 @@ dependencies {
 ////    debugCompile rootProject.ext.debugDependencies.blockCanary
 ////    releaseCompile rootProject.ext.releaseDependencies.blockCanary
 
-//    compile 'com.jakewharton:butterknife:7.0.1'
+    apt libButterknifeCompiler
+    compile libButterknife
+
+
 
 }

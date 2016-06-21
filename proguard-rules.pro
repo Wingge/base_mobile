@@ -70,3 +70,8 @@
 -keepclasseswithmembernames class * {
     @butterknife.* <fields>;
 }
+
+-keep public class * implements butterknife.internal.ViewBinder { public <init>(); }
+-keep class butterknife.*
+-keepclasseswithmembernames class * { @butterknife.* <methods>; }
+-keepclasseswithmembernames class * { @butterknife.* <fields>; }

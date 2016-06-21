@@ -1,4 +1,4 @@
-package android.code.wing.baseapp;
+package com.code.wing.baseapp;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
