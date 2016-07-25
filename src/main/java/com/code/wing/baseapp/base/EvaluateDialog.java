@@ -1,9 +1,11 @@
 package com.code.wing.baseapp.base;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 
 /**
  * 可返回数据的fragment dialog,参考了http://blog.csdn.net/lmj623565791/article/details/42628537
@@ -12,9 +14,27 @@ import android.support.v4.app.DialogFragment;
 public class EvaluateDialog extends DialogFragment {
     private static final int NON_REQUEST_CODE = 980;
     private static int mRequestCode;
+    AlertDialog.Builder alertDialogBuilder;
+
+    /**
+     * 需要设置dialog
+     * @param alertDialogBuilder
+     */
+    public void setAlertDialogBuilder(AlertDialog.Builder alertDialogBuilder) {
+        this.alertDialogBuilder = alertDialogBuilder;
+    }
 
     public static EvaluateDialog newInstance() {
         return newInstance(NON_REQUEST_CODE);
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        if(alertDialogBuilder!=null){
+            return alertDialogBuilder.create();
+        }else{
+            throw new RuntimeException("you must using instance.setAlertDialogBuilder method to create the dialog view");
+        }
     }
 
     public static EvaluateDialog newInstance(int requestCode) {

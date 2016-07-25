@@ -29,13 +29,13 @@ public abstract class BaseSingleFragmentActivity extends BaseFragmentActivity {
     }
 
     /**
-     * SingleFragmentActivity , so...no need addFragment
+     * SingleFragmentActivity , so...no need addFragmentAndCheckCase
      *
      * @param fragment
      * @deprecated
      */
     @Override
-    protected void addFragment(Fragment fragment) {
+    protected void addFragmentAndCheckCase(Fragment fragment) {
 
     }
 }

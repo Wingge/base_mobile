@@ -1,9 +1,13 @@
 package com.code.wing.baseapp.base;
 
+import android.annotation.TargetApi;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -15,41 +19,49 @@ import butterknife.ButterKnife;
 public abstract class BaseFragmentActivity extends AppCompatActivity {
 
     protected final String TAG = getClass().getSimpleName();
-    protected Toolbar toolbar;
+    Toolbar mToolbar;
+
     protected abstract void initViews(Bundle savedInstanceState);
-    FragmentManager fm;
+
+    /*标识是否可返回栈*/
+    boolean mCanBackStack = true;
+
+    FragmentManager mFragmentManager;
+
     //初始fragment，或还原fragment
     protected abstract Fragment initOrRestoreFragment(Bundle savedInstanceState);
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
         ButterKnife.bind(this);
         initToolbar();
-        fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(getFragmentContentId());
+        mFragmentManager = getSupportFragmentManager();
+        Fragment fragment = mFragmentManager.findFragmentById(getFragmentContentId());
         if (fragment == null) {
             fragment = initOrRestoreFragment(savedInstanceState);
-            fm.beginTransaction().add(getFragmentContentId(), fragment).commit();
+            if (fragment != null)
+                mFragmentManager.beginTransaction().add(getFragmentContentId(), fragment).commit();
         }
 
         initViews(savedInstanceState);
     }
 
     /**
-     * show toolbar
+     * show mToolbar
      * if the title is set ,the title will show else it will show the label set to the activity
      */
     protected void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
             if (showNavigationIcon()) {
-//            toolbar.setNavigationIcon(R.mipmap.toolbar_back);
+//            mToolbar.setNavigationIcon(R.mipmap.toolbar_back);
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//                toolbar.setSubtitle("副标题");
-                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//                mToolbar.setSubtitle("副标题");
+                mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         onBackPressed();
@@ -59,8 +71,10 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
         }
     }
 
+
     /**
      * 获取布局中Fragment的ID,you can overide it
+     *
      * @return
      */
     public int getContentViewId() {
@@ -69,9 +83,10 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
 
     /**
      * default layout is base_fragment,you can overide it
+     *
      * @return
      */
-    protected int getFragmentContentId(){
+    protected int getFragmentContentId() {
         return R.id.id_fragment_container;
     }
 
@@ -111,14 +126,39 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
 
     /**
      * 添加fragment
+     *
      * @param fragment
      */
     protected void addFragment(Fragment fragment) {
         if (fragment != null) {
-            fm.beginTransaction()
-                    .replace(getFragmentContentId(), fragment, fragment.getClass().getSimpleName())
-                    .addToBackStack(fragment.getClass().getSimpleName())
-                    .commitAllowingStateLoss();
+            FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+            fragmentTransaction.replace(getFragmentContentId(), fragment, fragment.getClass().getSimpleName());
+            if (mCanBackStack) {
+                fragmentTransaction.addToBackStack(fragment.getClass().getSimpleName());
+            }
+            fragmentTransaction.commitAllowingStateLoss();
+        }
+    }
+
+    /**
+     * 添加fragment,并检查实现已经存在,如果是将会重用实例避免重复实例产生
+     *
+     * @param fragment
+     */
+    protected void addFragmentAndCheckCase(Fragment fragment) {
+        if (fragment != null) {
+            Fragment oldFragment = mFragmentManager.findFragmentByTag(fragment.getClass().getSimpleName());
+            if (oldFragment != null) {
+                FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+                /*以下的两个方法暂不考虑优劣 */
+//                    fragmentTransaction.hide(mFragmentManager.);
+//                    fragmentTransaction.show(oldFragment);
+//                    fragmentTransaction.commit();
+                fragmentTransaction.attach(oldFragment);
+
+            } else {
+                addFragment(fragment);
+            }
         }
     }
 
@@ -126,13 +166,44 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
      * /移除fragment
      */
     protected void removeFragment() {
-//        if (fm.getBackStackEntryCount() > 1) {
-//            fm.popBackStack();
+//        if (mFragmentManager.getBackStackEntryCount() > 1) {
+//            mFragmentManager.popBackStack();
 //        } else {
 //            finish();
 //        }
         onBackPressed();
     }
 
+    /**
+     * @param canBackStack
+     * @return
+     * @date 2016/6/28 0028 16:52
+     * @author Wing.Zhong
+     * @description 设置当前activity包含的fragment是否可以使用返回栈
+     */
+    public void setCanBackStack(boolean canBackStack) {
+        mCanBackStack = canBackStack;
+    }
+
+    public void startActivity(Class<?> c,Bundle bundle){
+        Intent intent = new Intent(this,c);
+        if(bundle!=null)
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    public void startActivity(Class<?> c){
+        startActivity(c,null);
+    }
+
+
+    public void startActivityForResult(Class<?> cls, Bundle bundle,
+                                       int requestCode) {
+        Intent intent = new Intent(this, cls);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        startActivityForResult(intent, requestCode);
+    }
 
 }

@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.neenbedankt.android-apt' // 注释处理和dagger关联
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion 23
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
@@ -138,37 +138,43 @@ configurations {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-
     compile project(':app_core')
     // Android support libraries.
     compile rootProject.ext.libSupportAppcompat
     compile rootProject.ext.libSupportDesign
     compile rootProject.ext.libSupportRecyclerview
     compile rootProject.ext.libSupportV4
-
-
     //默认，只有一个applicatinid时
-//    wearApp project(':base_wear')
-//    //    // china productFlavors分支下引用依赖。
-//    //    chinaDebugWearApp project(path: ':wear', configuration: 'chinaDebug')
-//    //    chinaQualityassuranceWearApp project(path: ':wear', configuration: 'chinaQualityassurance')
-//    //    chinaReleaseWearApp project(path: ':wear', configuration: 'chinaRelease')
-//    //    googleplayDebugWearApp project(path: ':wear', configuration: 'googleplayDebug')
-//    //    googleplayQualityassuranceWearApp project(path: ':wear', configuration: 'googleplayQualityassurance')
-//    //    googleplayReleaseWearApp project(path: ':wear', configuration: 'googleplayRelease')
-////        compile "com.google.android.gms:play-services:$GooglePlayServicesClientLibraryVersion"
 
-//    //内存泄漏检查，请二选一
+    //    wearApp project(':base_wear')
+
+    //    //    // china productFlavors分支下引用依赖。
+
+    //    //    chinaDebugWearApp project(path: ':wear', configuration: 'chinaDebug')
+
+    //    //    chinaQualityassuranceWearApp project(path: ':wear', configuration: 'chinaQualityassurance')
+
+    //    //    chinaReleaseWearApp project(path: ':wear', configuration: 'chinaRelease')
+
+    //    //    googleplayDebugWearApp project(path: ':wear', configuration: 'googleplayDebug')
+
+    //    //    googleplayQualityassuranceWearApp project(path: ':wear', configuration: 'googleplayQualityassurance')
+
+    //    //    googleplayReleaseWearApp project(path: ':wear', configuration: 'googleplayRelease')
+
+    ////        compile "com.google.android.gms:play-services:$GooglePlayServicesClientLibraryVersion"
+
+    //    //内存泄漏检查，请二选一
     testCompile rootProject.ext.debugDependencies.leakCanary
     debugCompile rootProject.ext.debugDependencies.leakCanary
     releaseCompile rootProject.ext.releaseDependencies.leakCanary
-////    testCompile rootProject.ext.debugDependencies.blockCanary
-////    debugCompile rootProject.ext.debugDependencies.blockCanary
-////    releaseCompile rootProject.ext.releaseDependencies.blockCanary
+    ////    testCompile rootProject.ext.debugDependencies.blockCanary
 
+    ////    debugCompile rootProject.ext.debugDependencies.blockCanary
+
+    ////    releaseCompile rootProject.ext.releaseDependencies.blockCanary
     apt libButterknifeCompiler
     compile libButterknife
-
-
-
+    compile libLogger
+//    compile 'com.google.android.gms:play-services-appindexing:9.0.0'
 }

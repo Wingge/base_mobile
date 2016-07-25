@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //md theme
+    <color name="colorPrimary">@color/md_pink_200</color>
+    <color name="colorPrimaryDark">@color/md_pink_300</color>
+    <color name="colorPrimaryLight">@color/md_pink_50</color>
+    <color name="textColorPrimary">#ffffff</color>
+    <color name="windowBackground">#303030</color>
+    <color name="navigationBarColor">@color/colorPrimary</color>
+    <color name="colorAccent">@color/md_pink_200</color>
+    <!--下面的高级货还不会玩-->
+    <color name="colorControlNormal">#000000</color>
+    <!--50-->
+    <color name="colorControlActivated">#80000000</color>
+    <!--<color name="colorControlHighlight">#000000</color>-->
+    <!--<color name="colorButtonNormal">#000000</color>-->
+    <!--<color name="colorEdgeEffect">#000000</color>-->
+    <!--<color name="colorSwitchThumbNormal">#000000</color>-->
+    <!--<color name="statusBarColor">#000000</color>-->
+    <!--<color name="textColorHint">#000000</color>-->
+    <!--#212121-->
+
+    <color name="divider">#1fffffff</color>
+
+    //text color
+    <color name="text_white">@color/textColorPrimary</color>
+    <!--100%-->
+    <color name="primary_text">#ffffff</color>
+    <!--70-->
+    <color name="secondary_text">#b3ffffff</color>
+    <!--50-->
+    <color name="disabled_hint_icon_color">#80ffffff</color>
+    <!--12-->
+    <color name="text_red">@color/colorAccent</color>
+
+
+    <!-- 33% card and dialogs -->
+    <color name="bg">#55424242</color>
+</resources>

@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.multidex.MultiDexApplication;
 
 import com.google.android.gms.security.ProviderInstaller;
+import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.util.HashMap;
@@ -25,6 +26,8 @@ public class App extends MultiDexApplication implements Application.ActivityLife
     @Override
     public void onCreate() {
         super.onCreate();
+        //日志工具类
+        Logger.init(getPackageName());
         //内存检测
         LeakCanary.install(this);
         appContext = this;
