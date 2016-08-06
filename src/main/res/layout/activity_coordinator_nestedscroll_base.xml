@@ -4,21 +4,23 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    >
 
     <include layout="@layout/toolbar_coordinator_layout" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
 
         <LinearLayout
             android:id="@+id/id_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingTop="24dp"/>
+            />
 
     </android.support.v4.widget.NestedScrollView>
 
@@ -30,6 +32,8 @@
         app:layout_anchorGravity="bottom|right|end"
         android:src="@mipmap/ic_launcher"
         android:layout_margin="@dimen/fab_margin"
-        android:clickable="true"/>
+        android:clickable="true"
+
+        />
 
 </android.support.design.widget.CoordinatorLayout>

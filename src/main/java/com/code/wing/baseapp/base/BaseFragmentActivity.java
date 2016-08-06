@@ -20,8 +20,11 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
 
     protected final String TAG = getClass().getSimpleName();
     Toolbar mToolbar;
+    protected View main_content;
 
     protected abstract void initViews(Bundle savedInstanceState);
+    /**用于子类定义在oncreate中需实现的代码*/
+    protected void initOther(Bundle savedInstanceState){};
 
     /*标识是否可返回栈*/
     boolean mCanBackStack = true;
@@ -37,6 +40,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
         ButterKnife.bind(this);
+        main_content = findViewById(R.id.main_content);
         initToolbar();
         mFragmentManager = getSupportFragmentManager();
         Fragment fragment = mFragmentManager.findFragmentById(getFragmentContentId());
@@ -45,7 +49,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
             if (fragment != null)
                 mFragmentManager.beginTransaction().add(getFragmentContentId(), fragment).commit();
         }
-
+        initOther(savedInstanceState);
         initViews(savedInstanceState);
     }
 

@@ -7,5 +7,5 @@
     <dimen name="detail_backdrop_height">256dp</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines.用于透明状态栏兼容 -->
-    <dimen name="toolbar_padding_top">25dp</dimen>
+    <dimen name="toolbar_padding_top">0dp</dimen>
 </resources>

@@ -1,20 +1,21 @@
 package com.code.wing.baseapp.base;
 
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.code.wing.baseapp.R;
+import com.code.wing.baseapp.util.MDStatusBarCompat;
 
 public abstract class BaseCoordinatorFragmentActivity extends BaseFragmentActivity {
 
-//    @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsing_toolbar;
-//    @BindView(R.id.action_button)
+    AppBarLayout appbar;
     FloatingActionButton action_button;
-//    @BindView(R.id.backdrop)
     ImageView backdrop;
 
 
@@ -32,10 +33,13 @@ public abstract class BaseCoordinatorFragmentActivity extends BaseFragmentActivi
     @Override
     protected void initToolbar() {
         collapsing_toolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        appbar = (AppBarLayout) findViewById(R.id.appbar);
         action_button = (FloatingActionButton) findViewById(R.id.action_button);
-        action_button = (FloatingActionButton) findViewById(R.id.action_button);
+        backdrop = (ImageView) findViewById(R.id.backdrop);
         loadBackdrop();
         super.initToolbar();
+        MDStatusBarCompat.setCollapsingToolbar(this, (CoordinatorLayout) main_content, appbar, backdrop, mToolbar);
+
     }
 
     /**
@@ -43,7 +47,7 @@ public abstract class BaseCoordinatorFragmentActivity extends BaseFragmentActivi
      *
      * @return
      */
-    abstract int getBackdropActionImage();
+    protected abstract int getBackdropActionImage();
 
     private void loadBackdrop() {
         int backdropImage = getBackdropActionImage();
@@ -56,7 +60,7 @@ public abstract class BaseCoordinatorFragmentActivity extends BaseFragmentActivi
 
     @Override
     public int getContentViewId() {
-        return R.layout.activity_coordinator_base;
+        return R.layout.activity_coordinator_nestedscroll_base;
     }
 
 }

@@ -4,11 +4,13 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
+    android:background="?attr/colorPrimary"
     android:minHeight="?attr/actionBarSize"
-    app:titleTextColor="@android:color/white"
-    app:subtitleTextColor="@android:color/white"
-    app:theme="@style/AppTheme"
-    app:popupTheme="@style/AppTheme.PopupOverlay"
-
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    app:layout_scrollFlags="scroll|enterAlways|snap"
+    android:paddingTop="@dimen/toolbar_padding_top"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false"
     />
+
