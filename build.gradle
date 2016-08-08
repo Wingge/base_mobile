@@ -178,6 +178,5 @@ dependencies {
     compile libLogger
 //    compile 'com.google.android.gms:play-services-appindexing:9.0.0'
 
-    compile 'com.jaeger.statusbaruitl:library:1.2.0'
 
 }

@@ -45,7 +45,6 @@ public abstract class BaseNavigationFragmentActivity extends BaseFragmentActivit
     protected void initToolbar() {
         super.initToolbar();
 //        MDStatusBarCompat.setDrawerToolbar(this,drawer_layout);
-//        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimaryDark));
     }
 
     /**给navigation view header view设置布局id*/
