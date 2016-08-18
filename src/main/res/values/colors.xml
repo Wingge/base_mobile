@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">@color/md_indigo_500</color>
+    <color name="colorPrimaryDark">@color/md_indigo_700</color>
+    <color name="colorAccent">@color/md_pink_A200</color>
+    <color name="textColorPrimary">@color/md_white_1000</color>
     <color name="windowBackground">#303030</color>
-    <color name="textColorPrimary">#ffffff</color>
-    <!-- menu icon color -->
-    <color name="textColorSecondary">#ffffff</color>
     <color name="divider">#1f000000</color>
     //text color
-    <color name="text_white">#ffffff</color>
-    <color name="titleTextAppearance">#000000</color>
+    <color name="text_white">@color/md_white_1000</color>
+    <color name="text_red">@color/colorAccent</color>
+    <color name="text_navigation_menu">@color/md_black_1000</color>
     <!--重色->主要字体87%-->
     <color name="primary_text">#de000000</color>
     <!--轻色->主要字体54-->
@@ -18,13 +17,12 @@
     <!--38-->
     <color name="disabled_hint_icon_color">#61000000</color>
     <color name="textColorTertiary">#61000000</color>
-    <!--12-->
-    <color name="text_red">@color/colorAccent</color>
-    <!-- 33%透明的背景色 -->
-    <color name="bg">#55000000</color>
     <!-- inverse text color: 87% black -->
     <color name="textColorPrimaryInverse">#DE000000</color>
     <color name="textColorSecondaryInverse">#9E9E9E</color>
+    <!-- 33%透明的背景色 -->
+    <color name="bg">#55000000</color>
+
 
 
     //这两个颜色随便写的不协调

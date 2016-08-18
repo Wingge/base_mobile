@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.code.wing.baseapp.R;
 
@@ -20,11 +21,12 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
 
     protected final String TAG = getClass().getSimpleName();
     Toolbar mToolbar;
-    protected View main_content;
+    //ContentView
+    protected ViewGroup view_content;
 
     protected abstract void initViews(Bundle savedInstanceState);
     /**用于子类定义在oncreate中需实现的代码*/
-    protected void initOther(Bundle savedInstanceState){};
+    protected void initOther(Bundle savedInstanceState){}
 
     /*标识是否可返回栈*/
     boolean mCanBackStack = true;
@@ -40,7 +42,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewId());
         ButterKnife.bind(this);
-        main_content = findViewById(R.id.main_content);
+        view_content = (ViewGroup) findViewById(R.id.main_content);
         initToolbar();
         mFragmentManager = getSupportFragmentManager();
         Fragment fragment = mFragmentManager.findFragmentById(getFragmentContentId());
@@ -79,7 +81,7 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
     /**
      * 获取布局中Fragment的ID,you can overide it
      *
-     * @return
+     * @return fragment layout Id
      */
     public int getContentViewId() {
         return R.layout.activity_base;
@@ -88,16 +90,16 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
     /**
      * default layout is base_fragment,you can overide it
      *
-     * @return
+     * @return the activity content fragment id
      */
-    protected int getFragmentContentId() {
+    public int getFragmentContentId() {
         return R.id.id_fragment_container;
     }
 
     /**
      * set true to show navigation icon
      *
-     * @return
+     * @return navigation icon status
      */
     protected boolean showNavigationIcon() {
         return true;
@@ -157,8 +159,8 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
                 /*以下的两个方法暂不考虑优劣 */
 //                    fragmentTransaction.hide(mFragmentManager.);
 //                    fragmentTransaction.show(oldFragment);
-//                    fragmentTransaction.commit();
                 fragmentTransaction.attach(oldFragment);
+                fragmentTransaction.commit();
 
             } else {
                 addFragment(fragment);
@@ -179,11 +181,8 @@ public abstract class BaseFragmentActivity extends AppCompatActivity {
     }
 
     /**
+     * 设置当前activity包含的fragment是否可以使用返回栈
      * @param canBackStack
-     * @return
-     * @date 2016/6/28 0028 16:52
-     * @author Wing.Zhong
-     * @description 设置当前activity包含的fragment是否可以使用返回栈
      */
     public void setCanBackStack(boolean canBackStack) {
         mCanBackStack = canBackStack;

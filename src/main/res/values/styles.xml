@@ -48,12 +48,6 @@
         <item name="color">@android:color/white</item>
     </style>
 
-    <style name="Base_ToolbarTheme">
-        <!-- Color used for the title of the Toolbar - as long as not overridden -->
-        <item name="android:textColorPrimary">@color/textColorPrimary</item>
-        <!-- Used to color back button and three dots -->
-        <item name="android:textColorSecondary">@color/textColorSecondary</item>
-    </style>
 
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>

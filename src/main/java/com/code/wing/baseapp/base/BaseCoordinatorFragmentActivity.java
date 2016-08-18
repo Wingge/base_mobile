@@ -38,14 +38,14 @@ public abstract class BaseCoordinatorFragmentActivity extends BaseFragmentActivi
         backdrop = (ImageView) findViewById(R.id.backdrop);
         loadBackdrop();
         super.initToolbar();
-        MDStatusBarCompat.setCollapsingToolbar(this, (CoordinatorLayout) main_content, appbar, backdrop, mToolbar);
+        MDStatusBarCompat.setCollapsingToolbar(this, (CoordinatorLayout) view_content, appbar, backdrop, mToolbar);
 
     }
 
     /**
      * 获取连接按钮，如果不需要请返回-1
      *
-     * @return
+     * @return image resourse id
      */
     protected abstract int getBackdropActionImage();
 

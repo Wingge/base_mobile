@@ -5,7 +5,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.code.wing.baseapp.R;
 
@@ -64,7 +63,6 @@ public abstract class BaseNavigationFragmentActivity extends BaseFragmentActivit
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        Toast.makeText(this,"哈哈",Toast.LENGTH_LONG).show();
         drawer_layout.closeDrawers();
         return handleMenuSelected(item);
     }

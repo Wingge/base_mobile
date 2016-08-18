@@ -9,7 +9,6 @@ import android.support.multidex.MultiDexApplication;
 
 import com.google.android.gms.security.ProviderInstaller;
 import com.orhanobut.logger.Logger;
-import com.squareup.leakcanary.LeakCanary;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +28,7 @@ public class App extends MultiDexApplication implements Application.ActivityLife
         //日志工具类
         Logger.init(getPackageName());
         //内存检测
-        LeakCanary.install(this);
+//        LeakCanary.install(this);
         appContext = this;
         this.registerActivityLifecycleCallbacks(this);
         handler = new Handler();
@@ -73,7 +72,7 @@ public class App extends MultiDexApplication implements Application.ActivityLife
 
     private void initHttpTool(){
 //        HttpTools.init(this);
-        Map<String, String> headers = new HashMap<String, String>();
+        Map<String, String> headers = new HashMap();
         headers.put("contentType","application/json");
         headers.put("apiVer", "p1.0.0.1");
         headers.put("appVer", "1.0.0.1");
