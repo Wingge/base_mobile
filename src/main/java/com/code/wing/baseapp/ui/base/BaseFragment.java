@@ -1,4 +1,4 @@
-package com.code.wing.baseapp.base;
+package com.code.wing.baseapp.ui.base;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -12,8 +12,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.orhanobut.logger.Logger;
 
 import butterknife.ButterKnife;
 

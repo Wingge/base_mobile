@@ -1,4 +1,4 @@
-package com.code.wing.baseapp.base;
+package com.code.wing.baseapp.widget;
 
 import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;

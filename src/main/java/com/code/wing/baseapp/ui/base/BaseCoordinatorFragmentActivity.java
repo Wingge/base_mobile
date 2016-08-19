@@ -1,4 +1,4 @@
-package com.code.wing.baseapp.base;
+package com.code.wing.baseapp.ui.base;
 
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;

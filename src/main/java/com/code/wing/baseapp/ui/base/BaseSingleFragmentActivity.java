@@ -1,4 +1,4 @@
-package com.code.wing.baseapp.base;
+package com.code.wing.baseapp.ui.base;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

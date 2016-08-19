@@ -1,4 +1,4 @@
-package com.code.wing.baseapp.base;
+package com.code.wing.baseapp.ui.base;
 
 import android.annotation.TargetApi;
 import android.content.Intent;

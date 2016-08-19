@@ -72,7 +72,7 @@ public class App extends MultiDexApplication implements Application.ActivityLife
 
     private void initHttpTool(){
 //        HttpTools.init(this);
-        Map<String, String> headers = new HashMap();
+        Map<String, String> headers = new HashMap<>();
         headers.put("contentType","application/json");
         headers.put("apiVer", "p1.0.0.1");
         headers.put("appVer", "1.0.0.1");

@@ -36,10 +36,15 @@
         <!--<item name="colorControlActivated">@color/colorActivated</item>-->
     </style>
 
-
+    <!--app using theme-->
     <style name="AppTheme" parent="AppBaseTheme">
 
 
+    </style>
+
+    <!--the splash screen theme-->
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
     </style>
 
 

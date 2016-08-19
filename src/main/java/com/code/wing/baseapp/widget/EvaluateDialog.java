@@ -1,4 +1,4 @@
-package com.code.wing.baseapp.base;
+package com.code.wing.baseapp.widget;
 
 import android.app.Activity;
 import android.app.Dialog;
